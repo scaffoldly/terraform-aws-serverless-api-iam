@@ -3,11 +3,31 @@
 data "aws_iam_policy_document" "cloudformation" {
   statement {
     actions = [
+      "cloudformation:ValidateTemplate"
+      "lambda:*EventSourceMapping*",
+      "s3:ListAllMyBuckets",
+      "s3:CreateBucket",
+      "s3:*Notification*",
+      "sns:Get*",
+      "sns:List*",
+      "sns:Check*",
+      "xray:*Group*",
+      "xray:*SamplingRule*",
+      "xray:*EncryptionConfig*"
+    ]
+
+    resources = [
+      "*"
+    ]
+  }
+
+  statement {
+    actions = [
       "iam:PassRole"
     ]
 
     resources = [
-      "arn:*:iam::*:role/${var.repository_name}*"
+      "arn:*:iam::*:role/*${var.repository_name}*"
     ]
   }
 
@@ -22,17 +42,7 @@ data "aws_iam_policy_document" "cloudformation" {
     ]
 
     resources = [
-      "arn:*:cloudformation:*:*:stack/${var.repository_name}*"
-    ]
-  }
-
-  statement {
-    actions = [
-      "cloudformation:ValidateTemplate"
-    ]
-
-    resources = [
-      "*"
+      "arn:*:cloudformation:*:*:stack/*${var.repository_name}*"
     ]
   }
 
@@ -42,20 +52,8 @@ data "aws_iam_policy_document" "cloudformation" {
     ]
 
     resources = [
-      "arn:*:s3:::${var.repository_name}*",
-      "arn:*:s3:::${var.repository_name}*/*",
-    ]
-  }
-
-  statement {
-    actions = [
-      "s3:ListAllMyBuckets",
-      "s3:CreateBucket",
-      "s3:*Notification*",
-    ]
-
-    resources = [
-      "*"
+      "arn:*:s3:::*${var.repository_name}*",
+      "arn:*:s3:::*${var.repository_name}*/*",
     ]
   }
 
@@ -103,7 +101,7 @@ data "aws_iam_policy_document" "cloudformation" {
     ]
 
     resources = [
-      "arn:*:logs:*:*:log-group:/aws/lambda/${var.repository_name}*:log-stream:*",
+      "arn:*:logs:*:*:log-group:/aws/lambda/*${var.repository_name}*:log-stream:*",
     ]
   }
 
@@ -117,7 +115,7 @@ data "aws_iam_policy_document" "cloudformation" {
     ]
 
     resources = [
-      "arn:*:events:*:*:rule/${var.repository_name}*"
+      "arn:*:events:*:*:rule/*${var.repository_name}*"
     ]
   }
 
@@ -138,8 +136,7 @@ data "aws_iam_policy_document" "cloudformation" {
     ]
 
     resources = [
-      "arn:*:lambda:*:*:function:${var.repository_name}*",
-      "arn:*:lambda:*:*:function:*-authorize-E*",
+      "arn:*:lambda:*:*:function:*${var.repository_name}*",
     ]
   }
 
@@ -150,17 +147,7 @@ data "aws_iam_policy_document" "cloudformation" {
     ]
 
     resources = [
-      "arn:*:lambda:*:*:function:${var.repository_name}*"
-    ]
-  }
-
-  statement {
-    actions = [
-      "lambda:*EventSourceMapping*"
-    ]
-
-    resources = [
-      "*"
+      "arn:*:lambda:*:*:function:*${var.repository_name}*"
     ]
   }
 
@@ -179,20 +166,17 @@ data "aws_iam_policy_document" "cloudformation" {
     ]
 
     resources = [
-      "arn:*:dynamodb:*:*:table/live-${var.repository_name}*",
-      "arn:*:dynamodb:*:*:table/nonlive-${var.repository_name}*"
+      "arn:*:dynamodb:*:*:table/*${var.repository_name}*",
     ]
   }
 
   statement {
     actions = [
-      "xray:*Group*",
-      "xray:*SamplingRule*",
-      "xray:*EncryptionConfig*"
+      "sns:*",
     ]
 
     resources = [
-      "*",
+      "arn:*:sns:*:*:*${var.repository_name}*",
     ]
   }
 }
