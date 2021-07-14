@@ -3,7 +3,7 @@
 data "aws_iam_policy_document" "cloudformation" {
   statement {
     actions = [
-      "cloudformation:ValidateTemplate"
+      "cloudformation:ValidateTemplate",
       "lambda:*EventSourceMapping*",
       "s3:ListAllMyBuckets",
       "s3:CreateBucket",
