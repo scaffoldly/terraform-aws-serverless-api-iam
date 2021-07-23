@@ -179,7 +179,7 @@ data "aws_iam_policy_document" "cloudformation" {
       "arn:*:sns:*:*:*${var.repository_name}*",
     ]
   }
-  
+
   statement {
     actions = [
       "sns:Unsubscribe",
