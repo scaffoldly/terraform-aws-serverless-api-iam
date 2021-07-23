@@ -179,6 +179,16 @@ data "aws_iam_policy_document" "cloudformation" {
       "arn:*:sns:*:*:*${var.repository_name}*",
     ]
   }
+  
+  statement {
+    actions = [
+      "sns:Unsubscribe",
+    ]
+
+    resources = [
+      "arn:*:sns:*:*:*",
+    ]
+  }
 }
 
 resource "aws_iam_role" "cloudformation" {
