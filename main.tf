@@ -193,6 +193,7 @@ data "aws_iam_policy_document" "cloudformation" {
 
 resource "aws_iam_role" "cloudformation" {
   name = "${var.repository_name}-cloudformation"
+  tags = {}
 
   assume_role_policy = <<EOF
 {
@@ -211,6 +212,12 @@ resource "aws_iam_role" "cloudformation" {
   ]
 }
 EOF
+
+  lifecycle {
+    ignore_changes = [
+      inline_policy
+    ]
+  }
 }
 
 resource "aws_iam_role_policy" "cloudformation_policy" {
@@ -331,6 +338,7 @@ data "aws_iam_policy_document" "deployer" {
 
 resource "aws_iam_user" "user" {
   name = "${var.repository_name}-deployer"
+  tags = {}
 }
 
 resource "aws_iam_user_policy" "policy" {
