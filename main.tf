@@ -97,7 +97,8 @@ data "aws_iam_policy_document" "cloudformation" {
       "logs:DeleteLogGroup",
       "logs:DeleteLogStream",
       "logs:DescribeLogStreams",
-      "logs:FilterLogEvents"
+      "logs:FilterLogEvents",
+      "logs:*RetentionPolicy*"
     ]
 
     resources = [
