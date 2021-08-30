@@ -7,7 +7,7 @@ data "aws_iam_policy_document" "cloudformation" {
       "lambda:*EventSourceMapping*",
       "s3:ListAllMyBuckets",
       "s3:CreateBucket",
-      "s3:*Encryption*",
+      "s3:*", // TEMP FIX FOR CF+Serverless New Encryption ISSUES
       "s3:*Notification*",
       "sns:Get*",
       "sns:List*",
