@@ -215,17 +215,10 @@ resource "aws_iam_role" "cloudformation" {
 }
 EOF
 
-  lifecycle {
-    ignore_changes = [
-      inline_policy
-    ]
+  inline_policy {
+    name   = "base"
+    policy = data.aws_iam_policy_document.cloudformation.json
   }
-}
-
-resource "aws_iam_role_policy" "cloudformation_policy" {
-  name   = "base-policy"
-  role   = aws_iam_role.cloudformation.name
-  policy = data.aws_iam_policy_document.cloudformation.json
 }
 
 data "aws_iam_policy_document" "assume_cloudformation_role" {
