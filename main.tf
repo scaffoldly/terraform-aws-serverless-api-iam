@@ -7,6 +7,7 @@ data "aws_iam_policy_document" "cloudformation" {
       "lambda:*EventSourceMapping*",
       "s3:ListAllMyBuckets",
       "s3:CreateBucket",
+      "s3:SetBucketEncryption",
       "s3:*Notification*",
       "sns:Get*",
       "sns:List*",
@@ -255,6 +256,7 @@ data "aws_iam_policy_document" "deployer" {
     actions = [
       "s3:ListAllMyBuckets",
       "s3:CreateBucket",
+      "s3:SetBucketEncryption",
       "s3:*Notification*"
     ]
 
