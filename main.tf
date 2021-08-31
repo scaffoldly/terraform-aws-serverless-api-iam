@@ -7,7 +7,6 @@ data "aws_iam_policy_document" "cloudformation" {
       "lambda:*EventSourceMapping*",
       "s3:ListAllMyBuckets",
       "s3:CreateBucket",
-      "s3:*", // TEMP FIX FOR CF+Serverless New Encryption ISSUES
       "s3:*Notification*",
       "sns:Get*",
       "sns:List*",
@@ -53,8 +52,11 @@ data "aws_iam_policy_document" "cloudformation" {
     ]
 
     resources = [
-      "arn:*:s3:::*${var.repository_name}*",
-      "arn:*:s3:::*${var.repository_name}*/*",
+      # Serverless trims to 25 characters
+      "arn:*:s3:::${substr(var.repository_name, 0, 24)}*",
+      "arn:*:s3:::${substr(var.repository_name, 0, 24)}*/*",
+      "arn:*:s3:::${var.repository_name}*",
+      "arn:*:s3:::${var.repository_name}*/*"
     ]
   }
 
@@ -240,6 +242,9 @@ data "aws_iam_policy_document" "deployer" {
     ]
 
     resources = [
+      # Serverless trims repository_name to 25 characters
+      "arn:*:s3:::${substr(var.repository_name, 0, 24)}*",
+      "arn:*:s3:::${substr(var.repository_name, 0, 24)}*/*",
       "arn:*:s3:::${var.repository_name}*",
       "arn:*:s3:::${var.repository_name}*/*"
     ]
@@ -249,7 +254,6 @@ data "aws_iam_policy_document" "deployer" {
     actions = [
       "s3:ListAllMyBuckets",
       "s3:CreateBucket",
-      "s3:*Encryption*",
       "s3:*Notification*"
     ]
 
