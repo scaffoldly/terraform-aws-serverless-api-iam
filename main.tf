@@ -193,6 +193,16 @@ data "aws_iam_policy_document" "cloudformation" {
       "arn:*:sns:*:*:*",
     ]
   }
+
+  statement {
+    actions = [
+      "secretsmanager:*",
+    ]
+
+    resources = [
+      "arn:*:secretsmanager:*:*:secret:*${var.repository_name}*",
+    ]
+  }
 }
 
 resource "aws_iam_role" "cloudformation" {
