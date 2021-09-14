@@ -1,14 +1,16 @@
-name: Push to Main
+name: Hotfix
 on:
   workflow_dispatch:
   push:
-    branches: [main]
+    branches: [0.15.x]
 jobs:
-  prerelease:
+  hotfix:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: 0.15.5
       - uses: actions/cache@v2
         with:
           path: ./.terraform/providers
@@ -18,14 +20,9 @@ jobs:
       - run: terraform init
       - run: terraform fmt -check -recursive -diff
       - run: terraform validate
-      - run: |
-          curl -Lo ./terraform-docs.tar.gz https://github.com/terraform-docs/terraform-docs/releases/download/v0.14.1/terraform-docs-v0.14.1-$(uname)-amd64.tar.gz
-          tar -xzf terraform-docs.tar.gz
-          chmod +x terraform-docs
-        working-directory: .terraform
-      - run: ./.terraform/terraform-docs markdown . --output-file README.md
       - uses: scaffoldly/bump-version-action@v1
         with:
-          action: prerelease
+          action: postrelease
           version-file: sly.json
           repo-token: ${{ secrets.GITHUB_TOKEN }}
+          release-branch: 0.15.x
