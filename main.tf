@@ -151,7 +151,8 @@ data "aws_iam_policy_document" "cloudformation" {
     ]
 
     resources = [
-      "arn:*:lambda:*:*:function:*${var.repository_name}*"
+      "arn:*:lambda:*:*:function:*${var.repository_name}*",
+      "arn:*:lambda:*:*:layer:*",
     ]
   }
 
