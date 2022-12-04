@@ -38,7 +38,8 @@ data "aws_iam_policy_document" "cloudformation" {
       "cloudformation:Get*",
       "cloudformation:PreviewStackUpdate",
       "cloudformation:CreateStack",
-      "cloudformation:UpdateStack"
+      "cloudformation:UpdateStack",
+      "cloudformation:*ChangeSet*"
     ]
 
     resources = [
