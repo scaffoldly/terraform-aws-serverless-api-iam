@@ -99,12 +99,13 @@ data "aws_iam_policy_document" "cloudformation" {
 
   statement {
     actions = [
-      "logs:CreateLogGroup",
-      "logs:CreateLogStream",
-      "logs:DeleteLogGroup",
-      "logs:DeleteLogStream",
-      "logs:DescribeLogStreams",
       "logs:FilterLogEvents",
+      "logs:DescribeLogStreams",
+      "logs:DeleteLogStream",
+      "logs:DeleteLogGroup",
+      "logs:CreateLogStream",
+      "logs:CreateLogGroup",
+      "logs:*SubscriptionFilter*",
       "logs:*RetentionPolicy*"
     ]
 
