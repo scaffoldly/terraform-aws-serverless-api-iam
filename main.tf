@@ -13,7 +13,10 @@ data "aws_iam_policy_document" "cloudformation" {
       "sns:Check*",
       "xray:*Group*",
       "xray:*SamplingRule*",
-      "xray:*EncryptionConfig*"
+      "xray:*EncryptionConfig*",
+      "kinesis:Get*",
+      "kinesis:List*",
+      "kinesis:Describe*",
     ]
 
     resources = [
@@ -173,6 +176,29 @@ data "aws_iam_policy_document" "cloudformation" {
 
     resources = [
       "arn:*:dynamodb:*:*:table/*${var.repository_name}*",
+    ]
+  }
+
+  statement {
+    actions = [
+      "kinesis:Create*",
+      "kinesis:Delete*",
+      "kinesis:Increase*",
+      "kinesis:Decrease*",
+      "kinesis:Register*",
+      "kinesis:Deregister*",
+      "kinesis:Enable*",
+      "kinesis:Disable*",
+      "kinesis:Start*",
+      "kinesis:Stop*",
+      "kinesis:Update*",
+      "kinesis:Subscribe*",
+      "kinesis:*Resource*",
+      "kinesis:*Tag*",
+    ]
+
+    resources = [
+      "arn:*:kinesis:*:*:stream/*${var.repository_name}*",
     ]
   }
 
